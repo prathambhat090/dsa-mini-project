@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <link rel="stylesheet" href="{{ url_for('stylesheet') }}">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Edit Student Record</h1>
+            <p>Update the student's information below</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <section class="card">
+            <form action="{{ url_for(
+                'edit_student', student_id=student.id
+            ) }}" method="POST">
+
+                <div class="form-group">
+                    <label for="name">Student Name</label>
+                    <input type="text" id="name" name="name"
+                           value="{{ student.name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email"
+                           value="{{ student.email }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <input type="text" id="course" name="course"
+                           value="{{ student.course }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester</label>
+                    <input type="number" id="semester" name="semester"
+                           min="1" max="12"
+                           value="{{ student.semester }}" required>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        Save Changes
+                    </button>
+
+                    <a href="{{ url_for('index') }}"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </section>
+
+        <footer>
+            <p>Student Record Management System | Python, Flask & MySQL</p>
+        </footer>
+    </div>
+
+</body>
+</html>

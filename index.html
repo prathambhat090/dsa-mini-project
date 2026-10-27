@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack | Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('stylesheet') }}">
+
+    <!-- New Emerald & Midnight theme -->
+    <style>
+        :root {
+            --navy: #102c2a;
+            --purple: #087f70;
+            --purple-dark: #06685c;
+            --background: #f3f8f6;
+        }
+
+        body {
+            background: #f3f8f6;
+        }
+
+        .sidebar {
+            background: #102c2a;
+        }
+
+        .brand-logo {
+            background: linear-gradient(135deg, #64e2bd, #079b80);
+            color: #103b32;
+            box-shadow: 0 6px 22px #18a88b33;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(110deg, #0c9b82, #087565);
+            box-shadow: 0 7px 20px #07816b30;
+        }
+
+        .nav-link:hover {
+            background: #ffffff12;
+        }
+
+        .hero {
+            background:
+                radial-gradient(circle at 85% 20%, #50d9b72b, transparent 33%),
+                linear-gradient(115deg, #102c2a, #14554b 58%, #087f70);
+        }
+
+        .hero-label {
+            color: #c4f7e8;
+        }
+
+        .hero-button {
+            color: #075b4d;
+        }
+
+        .heading-spark,
+        .eyebrow {
+            color: #0b9b80;
+        }
+
+        .stat-card {
+            border-color: #e2eee9;
+        }
+
+        .purple {
+            background: #d9f6ec;
+            color: #07816b;
+        }
+
+        .teal {
+            background: #d8f2f3;
+            color: #087f87;
+        }
+
+        .orange {
+            background: #fff0dc;
+            color: #c47a1a;
+        }
+
+        .green {
+            background: #def7e6;
+            color: #258c4e;
+        }
+
+        .purple-text {
+            color: #07816b;
+        }
+
+        .decoration-purple {
+            background: #d9f6ec;
+        }
+
+        .decoration-teal {
+            background: #d8f2f3;
+        }
+
+        .decoration-orange {
+            background: #fff0dc;
+        }
+
+        .decoration-green {
+            background: #def7e6;
+        }
+
+        .heading-icon.purple-bg {
+            background: #d9f6ec;
+            color: #07816b;
+        }
+
+        .primary-button {
+            background: linear-gradient(110deg, #0d9d83, #087565);
+            box-shadow: 0 5px 13px #07816b24;
+        }
+
+        .primary-button:hover {
+            box-shadow: 0 8px 19px #07816b40;
+        }
+
+        .record-pill,
+        .course-badge {
+            background: #dff6ed;
+            color: #087563;
+        }
+
+        .search-icon {
+            color: #078d77;
+        }
+
+        .search-box:focus-within {
+            border-color: #42bda2;
+            box-shadow: 0 0 0 3px #42bda21a;
+        }
+
+        .student-avatar,
+        .empty-icon {
+            background: #dff6ed;
+            color: #087563;
+        }
+
+        .edit-action {
+            background: #dff6ed;
+            color: #087563;
+        }
+
+        .edit-action:hover {
+            background: #c5ecdf;
+        }
+
+        .semester-badge {
+            background: #e0f3f5;
+            color: #087f87;
+        }
+
+        .table-footer a,
+        .page-footer strong {
+            color: #07816b;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #43cba8, #087f70);
+        }
+
+        .course-row:nth-child(3n + 2) .progress-fill {
+            background: linear-gradient(90deg, #72d9df, #168d98);
+        }
+
+        .course-row:nth-child(3n) .progress-fill {
+            background: linear-gradient(90deg, #f5c77d, #df9840);
+        }
+
+        .course-row:nth-child(3n + 2) .course-dot {
+            background: #168d98;
+        }
+
+        .message.success {
+            border-color: #bcebd8;
+            background: #e4f8ee;
+            color: #176d50;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #42bda2;
+            box-shadow: 0 0 0 3px #42bda21a;
+        }
+    </style>
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="#overview" class="brand">
+            <span class="brand-logo">E</span>
+            <span class="brand-name">
+                EduTrack
+                <small>STUDENT PORTAL</small>
+            </span>
+        </a>
+
+        <p class="nav-heading">WORKSPACE</p>
+
+        <nav class="navigation">
+            <a class="nav-link active" href="#overview">
+                <span>▦</span> Overview
+            </a>
+            <a class="nav-link" href="#students">
+                <span>♙</span> Student Directory
+            </a>
+            <a class="nav-link" href="#add-student">
+                <span>＋</span> Add Student
+            </a>
+            <a class="nav-link" href="#reports">
+                <span>▤</span> Academic Summary
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-promo">
+                <span class="promo-spark">✦</span>
+                <h3>Everything in one place.</h3>
+                <p>Keep student information organized and accessible.</p>
+                <a href="#students">Explore records →</a>
+            </div>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">AD</div>
+                <div class="admin-info">
+                    <strong>Administrator</strong>
+                    <small>Management Panel</small>
+                </div>
+                <span class="online-dot"></span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main dashboard -->
+    <main class="main-content">
+
+        <header class="topbar" id="overview">
+            <div>
+                <p class="eyebrow">STUDENT INFORMATION SYSTEM</p>
+                <h1>Dashboard <span class="heading-spark">✦</span></h1>
+                <p class="subtitle">
+                    Here's what's happening with your student records.
+                </p>
+            </div>
+            <a class="primary-button top-button" href="#add-student">
+                ＋ New Student
+            </a>
+        </header>
+
+        <!-- Success and error messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Welcome banner -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-label">
+                    <span class="hero-label-dot"></span>
+                    YOUR CAMPUS AT A GLANCE
+                </span>
+
+                <h2>Better records.<br>Brighter futures.</h2>
+
+                <p>
+                    Manage student information, track courses, and keep
+                    everything running smoothly from one place.
+                </p>
+
+                <a href="#students" class="hero-button">
+                    Explore directory <span>→</span>
+                </a>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-orbit orbit-one"></div>
+                <div class="hero-orbit orbit-two"></div>
+                <div class="hero-cap">🎓</div>
+                <span class="floating-card float-one">✦ Learning</span>
+                <span class="floating-card float-two">✓ Organized</span>
+                <span class="floating-star">✧</span>
+            </div>
+        </section>
+
+        <!-- Dashboard statistics -->
+        <section class="stats-grid">
+            <article class="stat-card">
+                <div class="stat-header">
+                    <span>Total Students</span>
+                    <span class="stat-icon purple">♙</span>
+                </div>
+                <h2>{{ students|length }}</h2>
+                <p><span class="stat-indicator purple-text">●</span>
+                    Registered records
+                </p>
+                <div class="stat-decoration decoration-purple"></div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-header">
+                    <span>Total Courses</span>
+                    <span class="stat-icon teal">▤</span>
+                </div>
+                <h2>{{ students|map(attribute='course')|unique|list|length }}</h2>
+                <p><span class="stat-indicator teal-text">●</span>
+                    Distinct courses
+                </p>
+                <div class="stat-decoration decoration-teal"></div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-header">
+                    <span>Semesters</span>
+                    <span class="stat-icon orange">◷</span>
+                </div>
+                <h2>{{ students|map(attribute='semester')|unique|list|length }}</h2>
+                <p><span class="stat-indicator orange-text">●</span>
+                    Represented semesters
+                </p>
+                <div class="stat-decoration decoration-orange"></div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-header">
+                    <span>System Status</span>
+                    <span class="stat-icon green">✓</span>
+                </div>
+                <h2 class="status-heading">Operational</h2>
+                <p><span class="stat-indicator green-text">●</span>
+                    Application dashboard
+                </p>
+                <div class="stat-decoration decoration-green"></div>
+            </article>
+        </section>
+
+        <!-- Add student section -->
+        <section class="panel" id="add-student">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">REGISTRATION</p>
+                    <h2>Add a New Student</h2>
+                    <p class="panel-subtitle">
+                        Fill in the details to create a student record.
+                    </p>
+                </div>
+                <div class="heading-icon purple-bg">＋</div>
+            </div>
+
+            <form action="{{ url_for('add_student') }}" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name <span>*</span></label>
+                        <input id="name" name="name" type="text"
+                               placeholder="e.g. Rahul Sharma" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span>*</span></label>
+                        <input id="email" name="email" type="email"
+                               placeholder="student@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course">Course <span>*</span></label>
+                        <input id="course" name="course" type="text"
+                               placeholder="e.g. BCA" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="semester">Semester <span>*</span></label>
+                        <select id="semester" name="semester" required>
+                            <option value="">Choose semester</option>
+                            {% for sem in range(1, 13) %}
+                                <option value="{{ sem }}">Semester {{ sem }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <p><span>*</span> Required fields</p>
+                    <button class="primary-button" type="submit">
+                        ＋ Register Student
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Student directory -->
+        <section class="panel" id="students">
+            <div class="panel-heading directory-heading">
+                <div>
+                    <p class="eyebrow">RECORD MANAGEMENT</p>
+                    <h2>Student Directory</h2>
+                    <p class="panel-subtitle">
+                        Search and manage all registered students.
+                    </p>
+                </div>
+                <span class="record-pill">{{ students|length }} records</span>
+            </div>
+
+            <div class="table-toolbar">
+                <label class="search-box">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" id="studentSearch"
+                           placeholder="Search by name, email or course..."
+                           aria-label="Search student records">
+                </label>
+                <span class="toolbar-label">ALL STUDENTS</span>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>EMAIL ADDRESS</th>
+                            <th>COURSE</th>
+                            <th>SEMESTER</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>
+                                <div class="student-cell">
+                                    <div class="student-avatar">
+                                        {{ student.name[:1]|upper }}
+                                    </div>
+                                    <div class="student-details">
+                                        <strong>{{ student.name }}</strong>
+                                        <small>Student ID: {{ student.id }}</small>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="email-cell">{{ student.email }}</td>
+                            <td><span class="course-badge">{{ student.course }}</span></td>
+                            <td>
+                                <span class="semester-badge">
+                                    Semester {{ student.semester }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="action-buttons">
+                                    <a class="icon-button edit-action"
+                                       href="{{ url_for('edit_student', student_id=student.id) }}"
+                                       title="Edit student"
+                                       aria-label="Edit {{ student.name }}">✎</a>
+
+                                    <form
+                                        action="{{ url_for('delete_student', student_id=student.id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this student record?');">
+                                        <button class="icon-button delete-action"
+                                                type="submit"
+                                                title="Delete student"
+                                                aria-label="Delete {{ student.name }}">×</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div id="noResults" class="no-results" hidden>
+                    <div class="empty-icon">⌕</div>
+                    <h3>No matching students</h3>
+                    <p>Try a different name, email address, or course.</p>
+                </div>
+
+                {% if not students %}
+                <div class="empty-state">
+                    <div class="empty-icon">♙</div>
+                    <h3>Your directory is waiting</h3>
+                    <p>Add your first student to get started.</p>
+                    <a href="#add-student" class="primary-button">
+                        ＋ Add First Student
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="table-footer">
+                <span>
+                    Showing <strong id="visibleCount">{{ students|length }}</strong>
+                    of {{ students|length }} students
+                </span>
+                <a href="#add-student">＋ Add another student</a>
+            </div>
+        </section>
+
+        <!-- Academic summary -->
+        <section class="panel" id="reports">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">ACADEMIC OVERVIEW</p>
+                    <h2>Course Distribution</h2>
+                    <p class="panel-subtitle">
+                        See how students are distributed by course.
+                    </p>
+                </div>
+                <div class="heading-icon teal-bg">▤</div>
+            </div>
+
+            {% if students %}
+                {% set courses = students|map(attribute='course')|unique|list %}
+                <div class="course-list">
+                    {% for course in courses %}
+                        {% set count = students|selectattr('course', 'equalto', course)|list|length %}
+                        <div class="course-row">
+                            <div class="course-row-info">
+                                <span class="course-dot"></span>
+                                <strong>{{ course }}</strong>
+                                <span class="course-count">
+                                    {{ count }} student{% if count != 1 %}s{% endif %}
+                                </span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill"
+                                     style="width: {{ (count * 100 / (students|length))|round|int }}%">
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <p>Course statistics will appear after you add students.</p>
+                </div>
+            {% endif %}
+        </section>
+
+        <footer class="page-footer">
+            <span><strong>EduTrack</strong> · Student Management System</span>
+            <span>Built with Python, Flask & MySQL</span>
+        </footer>
+    </main>
+</div>
+
+<script>
+    const searchInput = document.getElementById("studentSearch");
+    const rows = document.querySelectorAll("#studentTable tbody tr");
+    const visibleCount = document.getElementById("visibleCount");
+    const noResults = document.getElementById("noResults");
+
+    searchInput.addEventListener("input", function () {
+        const query = this.value.toLowerCase().trim();
+        let visible = 0;
+
+        rows.forEach(function (row) {
+            const matches = row.textContent.toLowerCase().includes(query);
+            row.hidden = !matches;
+            if (matches) visible++;
+        });
+
+        visibleCount.textContent = visible;
+        noResults.hidden = visible !== 0 || rows.length === 0;
+    });
+
+    document.querySelectorAll(".nav-link").forEach(function (link) {
+        link.addEventListener("click", function () {
+            document.querySelectorAll(".nav-link").forEach(function (item) {
+                item.classList.remove("active");
+            });
+            this.classList.add("active");
+        });
+    });
+</script>
+</body>
+</html>
